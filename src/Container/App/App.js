@@ -17,17 +17,11 @@ const App = () => {
   const [reposQuery, setReposQuery] = useState("");
   const [reposQueryInput, setReposQueryInput] = useState("");
 
-  // const login = (e) => {
-  //   e.preventDefault();
-  //   setToken(tokenInput);
-  //   localStorage.setItem("storedToken", token);
-  //   setTokenInput("");
-  // };
-
-  const login = (e, input) => {
+  const login = (e) => {
     e.preventDefault();
-    localStorage.setItem("storedToken", input.value);
-    setToken(input.value);
+    setToken(tokenInput);
+    localStorage.setItem("storedToken", token);
+    setTokenInput("");
   };
 
   const logout = () => {
@@ -78,7 +72,13 @@ const App = () => {
             {reposQuery && <ReposInfo reposQuery={reposQuery} />}
           </>
         ) : (
-          <Login token={token} setToken={setToken} login={login} />
+          <Login
+            token={token}
+            setToken={setToken}
+            setTokenInput={setTokenInput}
+            tokenInput={tokenInput}
+            login={login}
+          />
         )}
       </div>
     </ApolloProvider>

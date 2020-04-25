@@ -1,23 +1,18 @@
 import React from "react";
+import InputForm from "../InputForm/InputForm";
 import classes from "./Login.module.css";
 
-const Login = props => {
-  let createdRef = "";
+const Login = ({ login, setTokenInput, tokenInput }) => {
   return (
-    <form
-      className={classes.login_form}
-      onSubmit={e => props.login(e, createdRef)}
-    >
-      <input
-        type="password"
-        name="token"
-        ref={domEl => {
-          createdRef = domEl;
-        }}
-        placeholder="Paste your GitHub token"
-      />
-      <button>Login</button>
-    </form>
+    <InputForm
+      onSubmitFn={(e) => login(e)}
+      handleChange={(e) => setTokenInput(e.target.value)}
+      name="token"
+      type="password"
+      value={tokenInput}
+      placeholder="Paste your GitHub token"
+      btnDisplay="Login"
+    />
   );
 };
 
