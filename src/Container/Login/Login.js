@@ -29,7 +29,11 @@ const Login = ({ token, setToken }) => {
     setReposQuery("");
   };
 
-  const { loading, error, data } = useQuery(GET_USER, { errorPolicy: "all" });
+  const { loading, error, data } = useQuery(
+    GET_USER,
+    { skip: !token },
+    { errorPolicy: "all" }
+  );
 
   let outhMsg;
   if (loading) {
@@ -63,7 +67,7 @@ const Login = ({ token, setToken }) => {
         placeholder="Paste your GitHub token"
         btnDisplay="Login"
       />
-      {token && <p>{outhMsg}</p>}
+      <p>{outhMsg}</p>
     </>
   );
 };

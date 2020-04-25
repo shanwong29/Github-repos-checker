@@ -89,13 +89,11 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
 
   const { loading, error, data } = useQuery(
     GET_REPOS,
-    {
-      variables: { owner, name },
-    },
+    { skip: !name, variables: { owner, name } },
     { errorPolicy: "all" }
   );
 
-  let queryStatus;
+  let queryStatus = "";
 
   if (loading) {
     queryStatus = "loading...";
@@ -125,7 +123,9 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
         placeholder="e.g. nuwave/lighthouse"
         btnDisplay="Search"
       />
-      {reposQuery && queryStatus && <p>{queryStatus}</p>}
+
+      <p>{queryStatus}</p>
+
       {data && (
         <>
           <h1>{data.repository.name}</h1>
