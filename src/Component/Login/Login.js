@@ -1,19 +1,32 @@
 import React from "react";
-import InputForm from "../InputForm/InputForm";
 import classes from "./Login.module.css";
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
-const Login = ({ login, setTokenInput, tokenInput }) => {
-  return (
-    <InputForm
-      onSubmitFn={(e) => login(e)}
-      handleChange={(e) => setTokenInput(e.target.value)}
-      name="token"
-      type="password"
-      value={tokenInput}
-      placeholder="Paste your GitHub token"
-      btnDisplay="Login"
-    />
-  );
+const Login = ({ setIsAuthorized }) => {
+  const GET_USER = gql`
+    query {
+      viewer {
+        login
+        avatarUrl
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(GET_USER, { errorPolicy: "all" });
+
+  if (loading) {
+    return <p>loading...</p>;
+  }
+  if (error) {
+    console.log(error);
+    return <p>sth goes wrong</p>;
+  }
+
+  let { avatarUrl } = data.viewer;
+  let username = data.viewer.login;
+
+  setIsAuthorized(true);
+  return <></>;
 };
 
 export default Login;

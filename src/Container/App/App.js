@@ -16,6 +16,7 @@ const App = () => {
   const [tokenInput, setTokenInput] = useState(accessToken);
   const [reposQuery, setReposQuery] = useState("");
   const [reposQueryInput, setReposQueryInput] = useState("");
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   const login = (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const App = () => {
     localStorage.clear();
     setToken("");
     setReposQuery("");
+    setIsAuthorized(false);
   };
 
   const handleSearchQuery = (e) => {
@@ -51,13 +53,13 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <div className={classes.App}>
-        {token && (
+        {isAuthorized && (
           <button className={classes.logoutBtn} onClick={logout}>
             Logout
           </button>
         )}
         <h1 className={classes.app_title}>Repos Checker</h1>
-        {token ? (
+        {isAuthorized ? (
           <>
             <InputForm
               onSubmitFn={(e) => handleSearchQuery(e)}
@@ -72,13 +74,30 @@ const App = () => {
             {reposQuery && <ReposInfo reposQuery={reposQuery} />}
           </>
         ) : (
-          <Login
-            token={token}
-            setToken={setToken}
-            setTokenInput={setTokenInput}
-            tokenInput={tokenInput}
-            login={login}
-          />
+          <>
+            <InputForm
+              onSubmitFn={(e) => {
+                login(e);
+              }}
+              handleChange={(e) => setTokenInput(e.target.value)}
+              name="token"
+              type="password"
+              value={tokenInput}
+              placeholder="Paste your GitHub token"
+              btnDisplay="Login"
+            />
+
+            {token && (
+              <Login
+                token={token}
+                setToken={setToken}
+                setTokenInput={setTokenInput}
+                tokenInput={tokenInput}
+                login={login}
+                setIsAuthorized={setIsAuthorized}
+              />
+            )}
+          </>
         )}
       </div>
     </ApolloProvider>
