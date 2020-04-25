@@ -72,9 +72,7 @@ const GET_REPOS = gql`
 `;
 
 const ReposInfo = ({ reposQuery, setReposQuery }) => {
-  console.log(reposQuery);
   const [currentTab, setCurrentTab] = useState("pullRequests");
-  const [reposQueryInput, setReposQueryInput] = useState("");
 
   let owner;
   let name;
@@ -85,8 +83,8 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
   }
   const handleSearchQuery = (e) => {
     e.preventDefault();
-    setReposQuery(reposQueryInput);
-    setReposQueryInput("");
+    let queryStr = e.target.queryInput.value;
+    setReposQuery(queryStr);
   };
 
   const { loading, error, data } = useQuery(
@@ -102,16 +100,15 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
   if (loading) {
     queryStatus = "loading...";
   }
-  // return <p className={classes.reposInfo}>Loading...</p>;
 
   if (error) {
-    console.log(error.graphQLErrors[0].message);
     queryStatus = error.graphQLErrors[0].message;
   }
 
   let pullRequests;
   let openIssues;
   let closedIssues;
+
   if (data) {
     openIssues = data.repository.openIssues;
     closedIssues = data.repository.closedIssues;
@@ -122,15 +119,14 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
     <div className={classes.reposInfo}>
       <InputForm
         onSubmitFn={(e) => handleSearchQuery(e)}
-        handleChange={(e) => setReposQueryInput(e.target.value)}
-        name="Search Repos"
+        name="queryInput"
+        label="Search Repos: "
         type="text"
-        value={reposQueryInput}
         placeholder="e.g. nuwave/lighthouse"
         btnDisplay="Search"
       />
       {reposQuery && queryStatus && <p>{queryStatus}</p>}
-      {openIssues && (
+      {data && (
         <>
           <h1>{data.repository.name}</h1>
           <div className={classes.tap_wrapper}>

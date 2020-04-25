@@ -6,7 +6,6 @@ import ReposInfo from "../ReposInfo/ReposInfo";
 import InputForm from "../../Component/InputForm/InputForm";
 
 const Login = ({ token, setToken }) => {
-  const [tokenInput, setTokenInput] = useState("");
   const [reposQuery, setReposQuery] = useState("");
 
   const GET_USER = gql`
@@ -20,9 +19,8 @@ const Login = ({ token, setToken }) => {
 
   const login = (e) => {
     e.preventDefault();
-    setToken(tokenInput);
-    localStorage.setItem("storedToken", tokenInput);
-    setTokenInput("");
+    setToken(e.target.token.value);
+    localStorage.setItem("storedToken", e.target.token.value);
   };
 
   const logout = () => {
@@ -40,8 +38,6 @@ const Login = ({ token, setToken }) => {
   if (error) {
     outhMsg = "Sth goes wrong. Make sure the given / stored token is valid";
   }
-
-  console.log("Hello");
 
   if (data) {
     let { avatarUrl } = data.viewer;
@@ -62,10 +58,8 @@ const Login = ({ token, setToken }) => {
         onSubmitFn={(e) => {
           login(e);
         }}
-        handleChange={(e) => setTokenInput(e.target.value)}
         name="token"
         type="password"
-        value={tokenInput}
         placeholder="Paste your GitHub token"
         btnDisplay="Login"
       />
