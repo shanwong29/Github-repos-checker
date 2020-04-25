@@ -4,7 +4,7 @@ import { gql } from "apollo-boost";
 
 import PullRequests from "../../Component/PullRequests/PullRequests";
 import Issue from "../../Component/Issue/Issue";
-
+import InputForm from "../../Component/InputForm/InputForm";
 import classes from "./ReposInfo.module.css";
 
 const GET_REPOS = gql`
@@ -71,70 +71,107 @@ const GET_REPOS = gql`
   }
 `;
 
-const ReposInfo = ({ reposQuery }) => {
-  reposQuery = reposQuery.split("/");
-  const owner = reposQuery[0] && reposQuery[0].trim();
-  const name = reposQuery[1] && reposQuery[1].trim();
-
+const ReposInfo = ({ reposQuery, setReposQuery }) => {
+  console.log(reposQuery);
   const [currentTab, setCurrentTab] = useState("pullRequests");
+  const [reposQueryInput, setReposQueryInput] = useState("");
+
+  let owner;
+  let name;
+  if (reposQuery) {
+    reposQuery = reposQuery.split("/");
+    owner = reposQuery[0] && reposQuery[0].trim();
+    name = reposQuery[1] && reposQuery[1].trim();
+  }
+  const handleSearchQuery = (e) => {
+    e.preventDefault();
+    setReposQuery(reposQueryInput);
+    setReposQueryInput("");
+  };
 
   const { loading, error, data } = useQuery(
     GET_REPOS,
     {
-      variables: { owner, name }
+      variables: { owner, name },
     },
     { errorPolicy: "all" }
   );
 
-  if (loading) return <p className={classes.reposInfo}>Loading...</p>;
+  let queryStatus;
+
+  if (loading) {
+    queryStatus = "loading...";
+  }
+  // return <p className={classes.reposInfo}>Loading...</p>;
 
   if (error) {
-    return error.graphQLErrors.map(({ message }, i) => (
-      <p className={classes.reposInfo} key={i}>
-        {message}
-      </p>
-    ));
+    console.log(error.graphQLErrors[0].message);
+    queryStatus = error.graphQLErrors[0].message;
   }
 
-  let { pullRequests, openIssues, closedIssues } = data.repository;
+  let pullRequests;
+  let openIssues;
+  let closedIssues;
+  if (data) {
+    openIssues = data.repository.openIssues;
+    closedIssues = data.repository.closedIssues;
+    pullRequests = data.repository.pullRequests;
+  }
 
   return (
     <div className={classes.reposInfo}>
-      <h1>{data.repository.name}</h1>
-      <div className={classes.tap_wrapper}>
-        <h4
-          className={`${classes.tap} ${currentTab === "pullRequests" &&
-            classes.active_tab}`}
-          onClick={() => {
-            setCurrentTab("pullRequests");
-          }}
-        >
-          Pull Requests
-        </h4>
-        <h4
-          className={`${classes.tap} ${currentTab === "openIssues" &&
-            classes.active_tab}`}
-          onClick={() => {
-            setCurrentTab("openIssues");
-          }}
-        >
-          Open Issues
-        </h4>
-        <h4
-          className={`${classes.tap} ${currentTab === "closedIssues" &&
-            classes.active_tab}`}
-          onClick={() => {
-            setCurrentTab("closedIssues");
-          }}
-        >
-          Closed Issues
-        </h4>
-      </div>
-      {currentTab === "pullRequests" && (
-        <PullRequests pullRequests={pullRequests} />
+      <InputForm
+        onSubmitFn={(e) => handleSearchQuery(e)}
+        handleChange={(e) => setReposQueryInput(e.target.value)}
+        name="Search Repos"
+        type="text"
+        value={reposQueryInput}
+        placeholder="e.g. nuwave/lighthouse"
+        btnDisplay="Search"
+      />
+      {reposQuery && queryStatus && <p>{queryStatus}</p>}
+      {openIssues && (
+        <>
+          <h1>{data.repository.name}</h1>
+          <div className={classes.tap_wrapper}>
+            <h4
+              className={`${classes.tap} ${
+                currentTab === "pullRequests" && classes.active_tab
+              }`}
+              onClick={() => {
+                setCurrentTab("pullRequests");
+              }}
+            >
+              Pull Requests
+            </h4>
+            <h4
+              className={`${classes.tap} ${
+                currentTab === "openIssues" && classes.active_tab
+              }`}
+              onClick={() => {
+                setCurrentTab("openIssues");
+              }}
+            >
+              Open Issues
+            </h4>
+            <h4
+              className={`${classes.tap} ${
+                currentTab === "closedIssues" && classes.active_tab
+              }`}
+              onClick={() => {
+                setCurrentTab("closedIssues");
+              }}
+            >
+              Closed Issues
+            </h4>
+          </div>
+          {currentTab === "pullRequests" && (
+            <PullRequests pullRequests={pullRequests} />
+          )}
+          {currentTab === "openIssues" && <Issue issue={openIssues} />}
+          {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
+        </>
       )}
-      {currentTab === "openIssues" && <Issue issue={openIssues} />}
-      {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
     </div>
   );
 };
