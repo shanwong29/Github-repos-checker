@@ -89,7 +89,7 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
 
   const { loading, error, data } = useQuery(
     GET_REPOS,
-    { skip: !name, variables: { owner, name } },
+    { skip: !owner, variables: { owner, name } },
     { errorPolicy: "all" }
   );
 
