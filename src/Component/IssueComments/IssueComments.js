@@ -5,7 +5,7 @@ import classes from "./IssueComments.module.css";
 const IssueComments = ({ comments }) => {
   const [commentQuery, setCommentQuery] = useState("");
 
-  let filteredComments = comments.filter(el => {
+  let filteredComments = comments.filter((el) => {
     return el.node.bodyText.includes(commentQuery);
   });
 
@@ -38,11 +38,12 @@ const IssueComments = ({ comments }) => {
       <h4>Comments:</h4>
       <label htmlFor="commentQuery">Filter comments by keyword(s): </label>
       <input
+        className={classes.search_input}
         name="commentQuery"
         type="text"
         placeholder="type keyword(s) here..."
         value={commentQuery}
-        onChange={event => setCommentQuery(event.target.value)}
+        onChange={(event) => setCommentQuery(event.target.value)}
       />
       {filteredComments}
     </div>

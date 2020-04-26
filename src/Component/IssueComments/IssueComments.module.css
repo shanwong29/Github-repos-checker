@@ -1,5 +1,6 @@
 .comments_wrapper {
-  margin: 5px 5px 0 5px;
+  padding: 5px 5px 0 5px;
+  background-color: white;
 }
 
 .comment_text {
@@ -7,6 +8,18 @@
 }
 
 .each_comment_wrapper {
-  border-bottom: solid #f2f2f2 1px;
+  border-bottom: solid #e9e8e8 1px;
+  background-color: white;
   padding: 5px;
+}
+
+.search_input {
+  border-radius: 10px;
+  border: 1px solid #f2f2f2;
+  outline: none;
+  height: 30px;
+  box-shadow: 0 2px 3px #a8dadc, 0 -2px 3px #f1faee;
+  color: #457b9d;
+  margin: auto auto 5px 10px;
+  text-indent: 10px;
 }

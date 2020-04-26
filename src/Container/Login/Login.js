@@ -67,8 +67,9 @@ const Login = ({ token, setToken }) => {
         type="password"
         placeholder="Paste your GitHub token"
         btnDisplay="Login"
+        variant="middle"
       />
-      <p>{outhStatus}</p>
+      <p className={classes.requestStatus}>{outhStatus}</p>
     </>
   );
 };

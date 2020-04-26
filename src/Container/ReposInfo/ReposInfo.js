@@ -161,11 +161,13 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
               Closed Issues
             </h4>
           </div>
-          {currentTab === "pullRequests" && (
-            <PullRequests pullRequests={pullRequests} />
-          )}
-          {currentTab === "openIssues" && <Issue issue={openIssues} />}
-          {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
+          <div className={classes.data_wrapper}>
+            {currentTab === "pullRequests" && (
+              <PullRequests pullRequests={pullRequests} />
+            )}
+            {currentTab === "openIssues" && <Issue issue={openIssues} />}
+            {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
+          </div>
         </>
       )}
     </div>

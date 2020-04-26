@@ -1,4 +1,5 @@
 import React from "react";
+import "./InputForm.css";
 
 const InputForm = ({
   onSubmitFn,
@@ -8,13 +9,25 @@ const InputForm = ({
   type,
   placeholder,
   btnDisplay,
+  variant,
 }) => {
   return (
-    <form onSubmit={onSubmitFn}>
-      <label htmlFor={name}>{label}</label>
-      <input name={name} type={type} placeholder={placeholder} value={value} />
-      <button>{btnDisplay}</button>
-    </form>
+    <>
+      <label className="inputForm__label" htmlFor={name}>
+        {label}
+      </label>
+      <form onSubmit={onSubmitFn} className={`inputForm inputForm__${variant}`}>
+        <input
+          name={name}
+          type={type}
+          value={value}
+          placeholder=" "
+          className="inputForm__input"
+        />
+        <span className="inputForm__placeholder">{placeholder}</span>
+        <button className="inputForm__btn">{btnDisplay}</button>
+      </form>
+    </>
   );
 };
 

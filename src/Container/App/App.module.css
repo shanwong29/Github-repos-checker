@@ -4,14 +4,8 @@
   justify-content: center;
 }
 
-.logoutBtn {
-  justify-self: right;
-  margin-top: 1rem;
-}
-
 .app_title {
   margin-top: 2rem;
-  margin-bottom: 2rem;
   justify-self: center;
 }
 
