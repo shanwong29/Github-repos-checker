@@ -2,38 +2,32 @@
 
 A react app to query a repo by entering its author and name.
 
-List of pull requests, issues and comments of the chosed repo will be shown in tab view.
+List of pull requests, issues and comments of the chosed repo are shown in tab view. It also include login and a comment filtering function.
 
-It also include a comment filtering function.
+You may view it on the deployment page: [Repos Checker](https://shanwong29.github.io/Github-repos-checker/)
 
-## Installing
+The aim of this project is to learn GraphQL (client-side), react-hooks and CSS Module.
 
-1. Make sure you have [`node`](https://nodejs.org/) and [`npm`](https://www.npmjs.com/get-npm) installed.
-2. Clone the repository and install the dependencies:
+## Run Locally for Development
+
+1. Make sure you have [`Docker`](https://www.docker.com/) and [`Docker Compose`](https://docs.docker.com/compose/) installed.
+
+2. Clone the repository:
 
 ```
 git clone https://github.com/shanwong29/Github-repos-checker.git
+```
+
+3. Build Docker image and run the Docker container:
+
+```
 cd ./Github-repos-checker
-npm install
+docker-compose up --build
 ```
 
-## Running
+The conatiner can be accessed at [http://localhost:5000](http://localhost:5000).
 
-Run the app in development mode by the following command:
-
-```
-npm start
-```
-
-The UI will be shown in your browser at [http://localhost:3000](http://localhost:3000).
-
-## More to do:
-
-1. **Authentication for Github Outh login**
-
-   The Github token login function is currently just storing the token as a local storage, and using it later to make queries.
-
-   To avoid an invalid Github token, authentication logic is needed to be added in the login function.
+Every edit in the public or src folder will automatically be reflected in the app running in the container.
 
 ## Built with
 
