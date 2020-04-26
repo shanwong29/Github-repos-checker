@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import IssueComments from "../IssueComments/IssueComments";
-import FormattedDate from "../FormattedDate/FormattedDate";
-import ProfilePic from "../ProfilePic/ProfilePic";
+import AuthorBasicInfo from "../AuthorBasicInfo/AuthorBasicInfo";
 import classes from "./Issue.module.css";
 
 const Issue = ({ issue }) => {
@@ -9,7 +8,7 @@ const Issue = ({ issue }) => {
 
   issue = issue.edges.map((el, issueIndex) => {
     let comments = el.node.comments.edges;
-    let issueAuthor = el.node.author.login;
+    let author = el.node.author.login;
     let { avatarUrl } = el.node.author;
     let issueText = el.node.bodyText;
 
@@ -25,9 +24,11 @@ const Issue = ({ issue }) => {
             }
           }}
         >
-          <ProfilePic username={issueAuthor} url={avatarUrl} />
-          <span>{issueAuthor} &#8226; </span>
-          <FormattedDate timeStamp={el.node.createdAt} />
+          <AuthorBasicInfo
+            author={author}
+            avatarUrl={avatarUrl}
+            timeStamp={el.node.createdAt}
+          />
 
           <h4>{el.node.title}</h4>
 
@@ -37,7 +38,7 @@ const Issue = ({ issue }) => {
         </div>
 
         {activeIssue === issueIndex && (
-          <IssueComments comments={comments} issueAuthor={issueAuthor} />
+          <IssueComments comments={comments} issueAuthor={author} />
         )}
       </Fragment>
     );

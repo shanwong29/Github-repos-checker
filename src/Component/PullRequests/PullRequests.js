@@ -1,6 +1,5 @@
 import React from "react";
-import FormattedDate from "../FormattedDate/FormattedDate";
-import ProfilePic from "../ProfilePic/ProfilePic";
+import AuthorBasicInfo from "../AuthorBasicInfo/AuthorBasicInfo";
 
 const PullRequests = ({ pullRequests }) => {
   pullRequests = pullRequests.edges.map((el, index) => {
@@ -8,9 +7,11 @@ const PullRequests = ({ pullRequests }) => {
     let { avatarUrl } = el.node.author;
     return (
       <div className="info_wrapper" key={index}>
-        <ProfilePic username={author} url={avatarUrl} />
-        <span>{author} &#8226; </span>
-        <FormattedDate timeStamp={el.node.createdAt} />
+        <AuthorBasicInfo
+          author={author}
+          avatarUrl={avatarUrl}
+          timeStamp={el.node.createdAt}
+        />
         <h4>{el.node.title}</h4>
       </div>
     );

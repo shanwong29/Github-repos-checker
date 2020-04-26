@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import FormattedDate from "../FormattedDate/FormattedDate";
 import classes from "./IssueComments.module.css";
-import ProfilePic from "../ProfilePic/ProfilePic";
+import AuthorBasicInfo from "../AuthorBasicInfo/AuthorBasicInfo";
 
 const IssueComments = ({ comments }) => {
   const [commentQuery, setCommentQuery] = useState("");
@@ -23,13 +22,15 @@ const IssueComments = ({ comments }) => {
   });
 
   filteredComments = filteredComments.map((el, key) => {
-    let commentAuthor = el.node.author.login;
+    let author = el.node.author.login;
     let { avatarUrl } = el.node.author;
     return (
       <div className={classes.each_comment_wrapper} key={key}>
-        <ProfilePic username={commentAuthor} url={avatarUrl} />
-        <span>{commentAuthor} &#8226; </span>
-        <FormattedDate timeStamp={el.node.createdAt} />
+        <AuthorBasicInfo
+          author={author}
+          avatarUrl={avatarUrl}
+          timeStamp={el.node.createdAt}
+        />
 
         <p className={classes.comment_text}>{el.node.bodyText}</p>
       </div>
