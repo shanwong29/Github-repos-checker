@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import IssueComments from "../IssueComments/IssueComments";
 import FormattedDate from "../FormattedDate/FormattedDate";
-
+import ProfilePic from "../ProfilePic/ProfilePic";
 import classes from "./Issue.module.css";
 
 const Issue = ({ issue }) => {
@@ -10,6 +10,7 @@ const Issue = ({ issue }) => {
   issue = issue.edges.map((el, issueIndex) => {
     let comments = el.node.comments.edges;
     let issueAuthor = el.node.author.login;
+    let { avatarUrl } = el.node.author;
     let issueText = el.node.bodyText;
 
     return (
@@ -24,6 +25,7 @@ const Issue = ({ issue }) => {
             }
           }}
         >
+          <ProfilePic username={issueAuthor} url={avatarUrl} />
           <span>{issueAuthor} &#8226; </span>
           <FormattedDate timeStamp={el.node.createdAt} />
 

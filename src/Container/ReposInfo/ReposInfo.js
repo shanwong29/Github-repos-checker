@@ -19,6 +19,7 @@ const GET_REPOS = gql`
           node {
             author {
               login
+              avatarUrl
             }
             title
             createdAt
@@ -56,12 +57,14 @@ const GET_REPOS = gql`
     bodyText
     author {
       login
+      avatarUrl
     }
     comments(last: 5) {
       edges {
         node {
           author {
             login
+            avatarUrl
           }
           createdAt
           bodyText
