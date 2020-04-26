@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import ReposInfo from "../ReposInfo/ReposInfo";
 import InputForm from "../../Component/InputForm/InputForm";
+import ProfilePic from "../../Component/ProfilePic/ProfilePic";
 
 const Login = ({ token, setToken }) => {
   const [reposQuery, setReposQuery] = useState("");
@@ -50,7 +51,7 @@ const Login = ({ token, setToken }) => {
     return (
       <>
         <button className={classes.logoutBtn} onClick={logout}>
-          Logout
+          <ProfilePic url={avatarUrl} username={username} /> <p>Logout</p>
         </button>
         {<ReposInfo reposQuery={reposQuery} setReposQuery={setReposQuery} />}
       </>

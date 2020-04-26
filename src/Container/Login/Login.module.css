@@ -7,6 +7,8 @@
   color: #ee6c4d;
   font-weight: 600;
   padding: 5px 8px;
+  display: flex;
+  align-items: center;
 }
 
 .logoutBtn:hover,

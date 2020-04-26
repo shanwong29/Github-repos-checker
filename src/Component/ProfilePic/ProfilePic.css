@@ -1,0 +1,11 @@
+.profilePic {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  justify-self: center;
+}
+
+.profilepic__wrapper {
+  display: inline-block;
+  padding-right: 2px;
+}
