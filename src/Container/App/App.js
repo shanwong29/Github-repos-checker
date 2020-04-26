@@ -8,7 +8,6 @@ import classes from "./App.module.css";
 
 const App = () => {
   const accessToken = localStorage.getItem("storedToken") || "";
-  console.log("hey", accessToken);
   const [token, setToken] = useState(accessToken);
 
   const httpLink = new HttpLink({

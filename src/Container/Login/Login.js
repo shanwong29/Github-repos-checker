@@ -35,12 +35,13 @@ const Login = ({ token, setToken }) => {
     { errorPolicy: "all" }
   );
 
-  let outhMsg;
+  let outhStatus;
   if (loading) {
-    outhMsg = "loading...";
+    outhStatus = "loading...";
   }
   if (error) {
-    outhMsg = "Sth goes wrong. Make sure the given / stored token is valid";
+    outhStatus =
+      "Something goes wrong. Make sure the given / stored token is valid";
   }
 
   if (data) {
@@ -67,7 +68,7 @@ const Login = ({ token, setToken }) => {
         placeholder="Paste your GitHub token"
         btnDisplay="Login"
       />
-      <p>{outhMsg}</p>
+      <p>{outhStatus}</p>
     </>
   );
 };
