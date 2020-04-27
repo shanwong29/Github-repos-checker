@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-
-import PullRequests from "../../Component/PullRequests/PullRequests";
 import Issue from "../../Component/Issue/Issue";
 import InputForm from "../../Component/InputForm/InputForm";
 import classes from "./ReposInfo.module.css";
@@ -22,7 +20,15 @@ const GET_REPOS = gql`
               avatarUrl
             }
             title
+            bodyText
             createdAt
+            comments(last: 5) {
+              edges {
+                node {
+                  ...commentsInfo
+                }
+              }
+            }
           }
         }
       }
@@ -62,15 +68,19 @@ const GET_REPOS = gql`
     comments(last: 5) {
       edges {
         node {
-          author {
-            login
-            avatarUrl
-          }
-          createdAt
-          bodyText
+          ...commentsInfo
         }
       }
     }
+  }
+
+  fragment commentsInfo on Comment {
+    author {
+      login
+      avatarUrl
+    }
+    createdAt
+    bodyText
   }
 `;
 
@@ -165,9 +175,7 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
             </h4>
           </div>
           <div className={classes.data_wrapper}>
-            {currentTab === "pullRequests" && (
-              <PullRequests pullRequests={pullRequests} />
-            )}
+            {currentTab === "pullRequests" && <Issue issue={pullRequests} />}
             {currentTab === "openIssues" && <Issue issue={openIssues} />}
             {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
           </div>

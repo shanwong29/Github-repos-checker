@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import IssueComments from "../IssueComments/IssueComments";
+import Comments from "../Comments/Comments";
 import AuthorBasicInfo from "../AuthorBasicInfo/AuthorBasicInfo";
 import classes from "./Issue.module.css";
 
@@ -38,7 +38,7 @@ const Issue = ({ issue }) => {
         </div>
 
         {activeIssue === issueIndex && (
-          <IssueComments comments={comments} issueAuthor={author} />
+          <Comments comments={comments} issueAuthor={author} />
         )}
       </Fragment>
     );

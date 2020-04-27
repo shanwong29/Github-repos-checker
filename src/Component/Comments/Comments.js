@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from "./IssueComments.module.css";
+import classes from "./Comments.module.css";
 import AuthorBasicInfo from "../AuthorBasicInfo/AuthorBasicInfo";
 
 const IssueComments = ({ comments }) => {
