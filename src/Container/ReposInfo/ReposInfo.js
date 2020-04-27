@@ -25,7 +25,12 @@ const GET_REPOS = gql`
             comments(last: 5) {
               edges {
                 node {
-                  ...commentsInfo
+                  author {
+                    login
+                    avatarUrl
+                  }
+                  createdAt
+                  bodyText
                 }
               }
             }
@@ -68,19 +73,15 @@ const GET_REPOS = gql`
     comments(last: 5) {
       edges {
         node {
-          ...commentsInfo
+          author {
+            login
+            avatarUrl
+          }
+          createdAt
+          bodyText
         }
       }
     }
-  }
-
-  fragment commentsInfo on Comment {
-    author {
-      login
-      avatarUrl
-    }
-    createdAt
-    bodyText
   }
 `;
 
@@ -133,7 +134,7 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
         name="queryInput"
         label="Search Repos: "
         type="text"
-        placeholder="e.g. nuwave/lighthouse"
+        placeholder="e.g. google / jax"
         btnDisplay="Search"
       />
 
