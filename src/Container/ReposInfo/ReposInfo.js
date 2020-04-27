@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import Issue from "../../Component/Issue/Issue";
@@ -139,8 +139,8 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
 
       <p>{queryStatus}</p>
 
-      {data && (
-        <>
+      {data && !queryStatus && (
+        <Fragment>
           <h1>{data.repository.name}</h1>
           <div className={classes.tap_wrapper}>
             <h4
@@ -179,7 +179,7 @@ const ReposInfo = ({ reposQuery, setReposQuery }) => {
             {currentTab === "openIssues" && <Issue issue={openIssues} />}
             {currentTab === "closedIssues" && <Issue issue={closedIssues} />}
           </div>
-        </>
+        </Fragment>
       )}
     </div>
   );
