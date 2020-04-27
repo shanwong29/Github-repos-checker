@@ -6,21 +6,21 @@ import classes from "./Issue.module.css";
 const Issue = ({ issue }) => {
   const [activeIssue, setActiveIssue] = useState("");
 
-  issue = issue.edges.map((el, issueIndex) => {
+  let issueDisplay = issue.edges.map((el, index) => {
     let comments = el.node.comments.edges;
     let author = el.node.author.login;
     let { avatarUrl } = el.node.author;
     let issueText = el.node.bodyText;
 
     return (
-      <Fragment key={issueIndex}>
+      <Fragment key={index}>
         <div
-          className={`info_wrapper ${classes.issue}`}
+          className={classes.issue}
           onClick={() => {
-            if (issueIndex === activeIssue) {
+            if (index === activeIssue) {
               setActiveIssue(null);
             } else {
-              setActiveIssue(issueIndex);
+              setActiveIssue(index);
             }
           }}
         >
@@ -32,18 +32,18 @@ const Issue = ({ issue }) => {
 
           <h4>{el.node.title}</h4>
 
-          {activeIssue === issueIndex && (
+          {activeIssue === index && (
             <p className={classes.issue_text}>{issueText}</p>
           )}
         </div>
 
-        {activeIssue === issueIndex && (
+        {activeIssue === index && (
           <Comments comments={comments} issueAuthor={author} />
         )}
       </Fragment>
     );
   });
-  return <>{issue}</>;
+  return <>{issueDisplay}</>;
 };
 
 export default Issue;

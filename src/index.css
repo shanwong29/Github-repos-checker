@@ -6,15 +6,6 @@
   box-sizing: border-box;
 }
 
-.info_wrapper {
-  border-top: 1px #daacd7 solid;
-  background-color: #f0dfef;
-  padding: 5px;
-  z-index: 1;
-  position: relative;
-  /*The z-index attribute can only be used on positioned elements (absolute, relative or fixed).*/
-}
-
 h1 {
   color: #1d3557;
 }
